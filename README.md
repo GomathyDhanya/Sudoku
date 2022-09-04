@@ -1,5 +1,6 @@
 # sudoku
 Sudoku Solver
+demo: https://spectacular-kleicha-18728c.netlify.app/
 
 A Sudoku Solver Single page Website created using React Js
 Solves 9x9 and 6x6 Puzzles using the sudoku Backtracking algorithm
