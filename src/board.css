@@ -1,0 +1,109 @@
+
+
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(231, 206, 255);
+}
+
+
+
+.square{
+    width: 30px;
+    height:30px;
+    padding-left: 7%;
+    text-align: center;
+    
+    background-color: white;
+  
+    border-color: rgb(231, 206, 255);
+    box-shadow: none;
+    border-style:solid;
+    color: rgb(158, 98, 255);
+}
+
+.square:focus{
+    background-color: rgb(158, 98, 255);
+    color: white;
+}
+.Game{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap:5%;
+    width:100%;
+
+}
+#gameboard{
+    border-collapse: collapse;
+    border: 3px solid rgb(158, 98, 255);
+   
+
+}
+td:nth-of-type(3n){
+    border-right: 3px solid rgb(158, 98, 255);
+}
+
+td:last-child{
+    border-right: none;
+}
+
+.nine tr:nth-of-type(3n) td {    
+    border-bottom: 3px solid rgb(158, 98, 255);
+}
+
+.six tr:nth-of-type(2n) td {    
+    border-bottom: 3px solid rgb(158, 98, 255);
+}
+
+tr:last-child td{
+    border-bottom: none;
+}
+#btns{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+.sudobtn{
+    background-color:  rgb(158, 98, 255);
+    
+    border-style:solid;
+    padding:5px;
+    color: white;
+    border-radius: 10px;
+    border-color: transparent;
+    transition: transform .2s;
+    
+}
+
+#heading{
+    font-family: 'Lobster', cursive;
+    color: rgb(158, 98, 255);
+    
+}
+#sizebtns{
+
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+
+}
+
+.sudobtn:hover{
+    transform: scale(1.2)
+}
+
+.focus{
+    transform: scale(1.2)
+}
+
+
+
+
+
+
