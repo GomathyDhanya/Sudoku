@@ -9,14 +9,9 @@ export default class Board extends React.Component{
         super(props)
         this.state={
             squares:Array(9).fill('').map(row => new Array(9).fill(''))
-            , size:9,
-            
-            
+            , size:9
         }
     }
-
-   
-    
 
     handleChange =(row,column,e) =>{
 
@@ -88,18 +83,13 @@ export default class Board extends React.Component{
 
     }
 
-    
-    
-    async solvesudoku(squares,row,col){
+    solvesudoku(squares,row,col){
 
+        
         
 
         if (row==this.state.size-1 && col==this.state.size)
-            {
-            
-        
-                 return true;
-            }
+            return true;
 
         if(col==this.state.size){
             row++;
@@ -109,13 +99,13 @@ export default class Board extends React.Component{
         
 
         if(squares[row][col]!=''){
-            return await this.solvesudoku(squares,row,col+1);
-        }
+            
+            return this.solvesudoku(squares,row,col+1);}
+
         
         
         for(let num=1;num<=this.state.size;num++)
         {
-
             
             
             if( this.issafe(squares,row,col,num))
@@ -128,12 +118,10 @@ export default class Board extends React.Component{
                 
                 document.getElementById("gameboard").rows[row].cells[col].children[0].value=num
 
-            await new Promise(resolve => setTimeout(resolve, 20)); // add a delay of 20ms before moving on to the next iteration
-            if( await this.solvesudoku(squares,row,col+1)) {
-                return true;
-            }
+
                 
-                
+                if( this.solvesudoku(squares,row,col+1))
+                    return true;
 
 
             }
@@ -143,7 +131,7 @@ export default class Board extends React.Component{
             //
             
             document.getElementById("gameboard").rows[row].cells[col].children[0].value=''
-            await new Promise(resolve => setTimeout(resolve, 20));
+            
 
 
         }
@@ -152,19 +140,16 @@ export default class Board extends React.Component{
  
         
     }
-    
-
 
     solve(){
 
-        
-        
         let squares=this.state.squares.slice()
         console.log(squares)
         
         this.solvesudoku(squares,0,0)
-        
-        //
+        this.setState({
+               squares:squares
+            })
 
         console.log(this.state.squares)
         
@@ -205,13 +190,11 @@ export default class Board extends React.Component{
 
     nine(){
 
-
         if(this.state.size==6)
         {
         this.setState({
             squares:Array(9).fill('').map(row => new Array(9).fill('')),
-            size:9,
-            stop:false
+            size:9
         })
 
         const sqs=document.getElementsByClassName("square");
@@ -232,8 +215,7 @@ export default class Board extends React.Component{
         if(this.state.size==9){
         this.setState({
             squares:Array(6).fill('').map(row => new Array(6).fill('')),
-            size:6,
-            stop:false
+            size:6
         })
 
         const sqs=document.getElementsByClassName("square");
@@ -281,10 +263,7 @@ export default class Board extends React.Component{
                 </tbody>
         </table>
        <div id="btns">
-        <div>
-       <button type="button" onClick={()=>this.solve()} className="sudobtn" id="solve">Solve</button>
-       
-       </div>
+       <button type="button" onClick={()=>this.solve()} className="sudobtn">Solve</button>
        <button type="button" onClick={()=>this.clear()} className="sudobtn">Clear</button>
        
        
