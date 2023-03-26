@@ -16,7 +16,9 @@ export default class Board extends React.Component{
     }
 
    
-    
+    refreshPage=()=>{
+        window.location.reload(false);
+      }
 
     handleChange =(row,column,e) =>{
 
@@ -281,10 +283,11 @@ export default class Board extends React.Component{
                 </tbody>
         </table>
        <div id="btns">
-        <div>
+        
        <button type="button" onClick={()=>this.solve()} className="sudobtn" id="solve">Solve</button>
        
-       </div>
+       <button type="button" className="sudobtn" onClick={()=>this.refreshPage()}>Stop</button>
+       
        <button type="button" onClick={()=>this.clear()} className="sudobtn">Clear</button>
        
        
