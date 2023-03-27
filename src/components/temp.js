@@ -3,22 +3,29 @@ import React from "react";
 import '../board.css'
 
 
+function insessionstore(){
+    return sessionStorage.getItem('size')?Number(sessionStorage.getItem('size')):9
+}
+
 export default class Board extends React.Component{
 
     constructor(props){
         super(props)
         this.state={
-            squares:Array(9).fill('').map(row => new Array(9).fill(''))
-            , size:9,
+            squares:Array(insessionstore()).fill('').map(row => new Array(insessionstore()).fill(''))
+            , size:insessionstore(),
+            paused:false,
+            solving:false
             
             
         }
     }
 
    
-    refreshPage=()=>{
-        window.location.reload(false);
-      }
+    pause = () => {
+        this.setState({ paused: true });
+        document.getElementById('solve').disabled=false;
+    }
 
     handleChange =(row,column,e) =>{
 
@@ -117,7 +124,11 @@ export default class Board extends React.Component{
         
         for(let num=1;num<=this.state.size;num++)
         {
-
+            if (this.state.paused) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                num--;
+                continue;
+            }
             
             
             if( this.issafe(squares,row,col,num))
@@ -159,30 +170,46 @@ export default class Board extends React.Component{
 
     solve(){
 
-        
+        if(this.state.solving){
+            return
+        }
         
         let squares=this.state.squares.slice()
         console.log(squares)
+
+        const sqs=document.getElementsByClassName("square");
+
+        for(let i=0;i<sqs.length;i++)
+            sqs[i].disabled=true
+
+        document.getElementById('solve').disabled=true;
+       
+
+        this.setState({ paused: false ,solving:true});
         
-        this.solvesudoku(squares,0,0)
+        this.solvesudoku(squares,0,0).then(
+            ()=>{
+                this.setState({ paused: false ,solving:false});
+                document.getElementById('solve').disabled=false;
+
+            }
+        )
         
         //
 
         console.log(this.state.squares)
         
 
-        const sqs=document.getElementsByClassName("square");
-
-        for(let i=0;i<sqs.length;i++)
-            sqs[i].disabled=true
-       
+        
                 
 
     }
 
     clear(){
 
-
+        sessionStorage.setItem("size",this.state.size);
+        window.location.reload(false)
+        /*
         const sqs=document.getElementsByClassName("square");
 
         for(let i=0;i<sqs.length;i++)
@@ -201,6 +228,9 @@ export default class Board extends React.Component{
         this.setState({
             squares:squares
         })
+
+        console.log("cleared "+this.state.squares)
+        */
 
         
     }
@@ -286,7 +316,7 @@ export default class Board extends React.Component{
         
        <button type="button" onClick={()=>this.solve()} className="sudobtn" id="solve">Solve</button>
        
-       <button type="button" className="sudobtn" onClick={()=>this.refreshPage()}>Stop</button>
+       <button type="button" className="sudobtn" onClick={()=>this.pause()}>Stop</button>
        
        <button type="button" onClick={()=>this.clear()} className="sudobtn">Clear</button>
        

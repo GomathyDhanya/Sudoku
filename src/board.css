@@ -66,7 +66,7 @@ tr:last-child td{
 }
 #btns{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap:10px;
 }
 .sudobtn{
@@ -95,10 +95,6 @@ tr:last-child td{
 }
 
 .sudobtn:hover{
-    transform: scale(1.2)
-}
-
-.focus{
     transform: scale(1.2)
 }
 
